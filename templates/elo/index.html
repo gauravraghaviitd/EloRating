@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<title>EloRating</title>
+	<style>
+	      * {
+	        box-sizing: border-box;
+	        }
+
+	      img {
+	        padding: 50px;
+	        transition: transform .2s;
+	        width: 200px;
+	        height: 200px;
+	        margin: 0 auto;
+	      }
+
+	      img:hover {
+	        -ms-transform: scale(1.2); 
+	        -webkit-transform: scale(1.2); 
+	        transform: scale(1.2); 
+	      }
+
+
+
+	      .column {
+		  float: left;
+		  width: 50%;
+		  padding: 10px;
+		  height: 300px; 
+		}
+
+
+	.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+
+
+	 .center {
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+		  width: 50%;
+		}
+	</style>
+
+	<script>
+	    
+	    $(document).ready(function(){
+
+	      var baseURL = "{% static 'images/' %}"
+
+	      $("#picone").attr( 'src',baseURL + "{{hola.picone}}")
+	      $("#pictwo").attr( 'src',baseURL + "{{hola.pictwo}}")
+	  
+	      $("#picone").click(function(){
+	        var v1 = $("#chkone").is(':checked')?0:1;
+	        var v2 = $("#chktwo").is(':checked')?0:1;
+	        $("#chkone").prop("checked", false);
+	        $("#chktwo").prop("checked", false);
+	        
+	        $.ajax({
+	        
+	          url:"validateUser",
+	          
+	          data:{
+	            id:1,
+	            validone:v1,
+	            validtwo:v2,
+	            picone:$("#picone").attr("src"),
+	            pictwo:$("#pictwo").attr("src")
+	            
+	          },
+	          
+	          success:function(responseText){
+	            
+	            console.log(responseText)
+	            console.log(baseURL)
+	            
+	            $("#picone").attr('src',baseURL + responseText.picone);
+	            $("#pictwo").attr('src',baseURL + responseText.pictwo);
+	      
+	            
+	          }
+	          
+	          
+	        });
+	        
+	        
+	        
+	      });
+
+	      $("#pictwo").click(function(){
+	        var v1 = $("#chkone").is(':checked')?0:1;
+	        var v2 = $("#chktwo").is(':checked')?0:1;
+	        $("#chkone").prop("checked", false);
+	        $("#chktwo").prop("checked", false);
+
+	        $.ajax({
+	        
+	          url:"validateUser",
+	          
+	          data:{
+	            id:2,
+	            validone:v1,
+	            validtwo:v2,
+	            picone:$("#picone").attr("src"),
+	            pictwo:$("#pictwo").attr("src")
+	            
+	          },
+	          
+	          success:function(responseText){
+	            
+	            console.log(responseText)
+	            console.log(baseURL)
+	            
+	            $("#picone").attr('src',baseURL + responseText.picone);
+	            $("#pictwo").attr('src',baseURL + responseText.pictwo);
+	      
+	            
+	          }
+	          
+	          
+	        });
+	        
+	        
+	        
+	      });
+  
+	    });
+
+	 </script>
+
+</head>
+
+<body>
+
+  	<div class="header" style="text-align: center;margin-bottom: 50px;margin-top: 50px">
+  		<h2 align="center">Who is more pretty.</h>
+  	</div>
+   
+    <div class="row">
+    	<div class="column">
+        <input type="checkbox" id="chkone" />
+    		<img id="picone" src=""  style="width: 400px;height: 400px;" class="center" >
+    	</div>
+    	<div class="column">
+        <input type="checkbox" id="chktwo"/>
+    		<img id="pictwo" src="" style="width: 400px;height: 400px;" class="center">
+    	</div>
+    </div>
+ 
+  <br/><br/><br/><br/><br/><br/>
+  <a class="btn btn-primary" href="/elo/testget/top" role="button">Top 20</a>
+
+</body>
+</html>
